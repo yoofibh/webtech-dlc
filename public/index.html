@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Campus Digital Library Catalogue</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="logo-icon">📚</span>
+      <span class="logo-text">Campus Digital Library</span>
+    </div>
+    <nav class="main-nav">
+      <button class="nav-link" data-view="books">Books</button>
+      <button class="nav-link" data-view="admin" id="nav-admin" style="display:none;">Admin</button>
+      <button class="nav-link" data-view="login" id="nav-login">Login</button>
+      <button class="nav-link" data-view="register" id="nav-register">Register</button>
+      <button class="nav-link nav-logout" id="nav-logout" style="display:none;">Logout</button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Flash messages -->
+    <div id="flash-message" class="flash" style="display:none;"></div>
+
+    <!-- LOGIN VIEW -->
+    <section id="view-login" class="view">
+      <h2>Login</h2>
+      <form id="login-form" class="form-card">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" required />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required />
+        </div>
+        <button type="submit" class="btn primary-btn">Login</button>
+      </form>
+      <p class="hint">
+        Don't have an account? <span class="link-like" data-view="register">Register here</span>.
+      </p>
+    </section>
+
+    <!-- REGISTER VIEW -->
+    <section id="view-register" class="view" style="display:none;">
+      <h2>Register</h2>
+      <form id="register-form" class="form-card">
+        <div class="form-group">
+          <label for="register-name">Full Name</label>
+          <input type="text" id="register-name" required />
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" required />
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" required />
+        </div>
+        <button type="submit" class="btn primary-btn">Create Account</button>
+      </form>
+      <p class="hint">
+        Already have an account? <span class="link-like" data-view="login">Login here</span>.
+      </p>
+    </section>
+
+    <!-- BOOKS VIEW (Student view) -->
+    <section id="view-books" class="view" style="display:none;">
+      <div class="view-header">
+        <h2>Books Catalogue</h2>
+        <div class="search-row">
+          <input type="text" id="search-input" placeholder="Search by title or author..." />
+          <select id="filter-category">
+            <option value="">All categories</option>
+          </select>
+          <select id="filter-status">
+            <option value="">Any status</option>
+            <option value="available">Available</option>
+            <option value="borrowed">Borrowed</option>
+          </select>
+          <button id="search-btn" class="btn">Search</button>
+          <button id="reset-filters-btn" class="btn secondary-btn">Reset</button>
+        </div>
+      </div>
+      <div id="books-list" class="cards-grid">
+        <!-- Books will be injected here -->
+      </div>
+    </section>
+
+    <!-- ADMIN VIEW -->
+    <section id="view-admin" class="view" style="display:none;">
+      <h2>Admin: Manage Books</h2>
+
+      <form id="book-form" class="form-card">
+        <input type="hidden" id="book-id" />
+        <div class="form-row">
+          <div class="form-group">
+            <label for="book-title">Title</label>
+            <input type="text" id="book-title" required />
+          </div>
+          <div class="form-group">
+            <label for="book-author">Author</label>
+            <input type="text" id="book-author" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="book-isbn">ISBN</label>
+            <input type="text" id="book-isbn" />
+          </div>
+          <div class="form-group">
+            <label for="book-category">Category</label>
+            <input type="text" id="book-category" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="book-description">Description</label>
+          <textarea id="book-description" rows="3"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="book-status">Status</label>
+          <select id="book-status">
+            <option value="available">Available</option>
+            <option value="borrowed">Borrowed</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn primary-btn" id="book-submit-btn">Add Book</button>
+        <button type="button" class="btn secondary-btn" id="book-cancel-edit-btn" style="display:none;">
+          Cancel Edit
+        </button>
+      </form>
+
+      <h3>All Books</h3>
+      <div id="admin-books-list" class="table-wrapper">
+        <!-- Admin table will be injected here -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Campus Digital Library · Built with Node, PostgreSQL & Vanilla JS</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

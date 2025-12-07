@@ -1,0 +1,41 @@
+admin user token
+{
+  "message": "User registered successfully.",
+  "user": {
+    "id": 2,
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "role": "admin",
+    "created_at": "2025-12-05T01:58:19.169Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzY0ODk5OTA0LCJleHAiOjE3NjU1MDQ3MDR9.NZv1CF3XwNABceJySJVOZXuLGBWtZcuotxCvnlvw9rg"
+}
+
+
+\Users\lenovo\Documents\webtech-dlc>node hashPassword.js
+New password: DlcAdmin123!
+Hashed password: $2b$10$ut5VzC9hYCc1eJGnoxQstOXny5fBAMMw5DeYXa7kRqZVAw9JK2IRm
+
+$2b$10$ut5VzC9hYCc1eJGnoxQstOXny5fBAMMw5DeYXa7kRqZVAw9JK2IRm
+
+
+
+// This function:
+// 1. Checks if an admin user already exists
+// 2. If not, creates a default admin: ybh@example.com / ybh123!
+const seedAdmin = async () => {
+  try {
+    // 1. Check if any admin exists
+    const result = await pool.query(
+      "SELECT id FROM users WHERE role = 'admin' LIMIT 1"
+    );
+
+    if (result.rows.length > 0) {
+      console.log('✔ Admin already exists, skipping admin seed.');
+      return;
+    }
+
+    // 2. No admin found → create one
+    const email = 'ybh@example.com';
+    const plainPassword = 'ybh123!';
+    const name = 'Adminbh User';
