@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <title>Campus Digital Library Catalogue</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Main stylesheet for the DLC interface -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,6 +14,8 @@
       <span class="logo-icon">📚</span>
       <span class="logo-text">Campus Digital Library</span>
     </div>
+
+    <!-- Simple top navigation for switching SPA views -->
     <nav class="main-nav">
       <button class="nav-link" data-view="books">Books</button>
       <button class="nav-link" data-view="admin" id="nav-admin" style="display:none;">Admin</button>
@@ -22,10 +26,10 @@
   </header>
 
   <main class="container">
-    <!-- Flash messages -->
+    <!-- Flash area for quick success/error messages -->
     <div id="flash-message" class="flash" style="display:none;"></div>
 
-    <!-- LOGIN VIEW -->
+    <!-- LOGIN VIEW  -->
     <section id="view-login" class="view">
       <h2>Login</h2>
       <form id="login-form" class="form-card">
@@ -40,11 +44,12 @@
         <button type="submit" class="btn primary-btn">Login</button>
       </form>
       <p class="hint">
-        Don't have an account? <span class="link-like" data-view="register">Register here</span>.
+        Don't have an account?
+        <span class="link-like" data-view="register">Register here</span>.
       </p>
     </section>
 
-    <!-- REGISTER VIEW -->
+    <!--REGISTER VIEW -->
     <section id="view-register" class="view" style="display:none;">
       <h2>Register</h2>
       <form id="register-form" class="form-card">
@@ -63,16 +68,21 @@
         <button type="submit" class="btn primary-btn">Create Account</button>
       </form>
       <p class="hint">
-        Already have an account? <span class="link-like" data-view="login">Login here</span>.
+        Already have an account?
+        <span class="link-like" data-view="login">Login here</span>.
       </p>
     </section>
 
-    <!-- BOOKS VIEW (Student view) -->
+    <!--BOOKS VIEW (Student)-->
     <section id="view-books" class="view" style="display:none;">
       <div class="view-header">
         <h2>Books Catalogue</h2>
         <div class="search-row">
-          <input type="text" id="search-input" placeholder="Search by title or author..." />
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search by title or author..."
+          />
           <select id="filter-category">
             <option value="">All categories</option>
           </select>
@@ -85,15 +95,16 @@
           <button id="reset-filters-btn" class="btn secondary-btn">Reset</button>
         </div>
       </div>
-      <div id="books-list" class="cards-grid">
-        <!-- Books will be injected here -->
-      </div>
+
+      <!--Books for students are rendered here by app.js-->
+      <div id="books-list" class="cards-grid"></div>
     </section>
 
-    <!-- ADMIN VIEW -->
+    <!--ADMIN VIEW (Manage books)-->
     <section id="view-admin" class="view" style="display:none;">
       <h2>Admin: Manage Books</h2>
 
+      <!-- Book form for adding/updating records -->
       <form id="book-form" class="form-card">
         <input type="hidden" id="book-id" />
         <div class="form-row">
@@ -131,23 +142,33 @@
           </select>
         </div>
 
-        <button type="submit" class="btn primary-btn" id="book-submit-btn">Add Book</button>
-        <button type="button" class="btn secondary-btn" id="book-cancel-edit-btn" style="display:none;">
+        <button type="submit" class="btn primary-btn" id="book-submit-btn">
+          Add Book
+        </button>
+        <button
+          type="button"
+          class="btn secondary-btn"
+          id="book-cancel-edit-btn"
+          style="display:none;"
+        >
           Cancel Edit
         </button>
       </form>
 
       <h3>All Books</h3>
-      <div id="admin-books-list" class="table-wrapper">
-        <!-- Admin table will be injected here -->
-      </div>
+      <!-- Admin table for all books (injected by app.js) -->
+      <div id="admin-books-list" class="table-wrapper"></div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© <span id="year"></span> Campus Digital Library · Built with Node, PostgreSQL & Vanilla JS</p>
+    <p>
+      © <span id="year"></span> Campus Digital Library · Built with Yoofi,
+      Yoofibh & Yooficraft
+    </p>
   </footer>
 
+  <!-- Main frontend logic for handling SPA + API calls -->
   <script src="app.js"></script>
 </body>
 </html>

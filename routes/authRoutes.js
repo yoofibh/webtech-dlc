@@ -5,31 +5,42 @@ const pool = require('../config/db');
 
 const router = express.Router();
 
-// REGISTER route: POST /api/auth/register
+/**
+ * POST /api/auth/register
+ * Handles creating a new user account.
+ * I use this for both students and admin (admin is controlled manually).
+ */
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    // Basic validation
+    // Basic input check
     if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Name, email, and password are required.' });
+      return res
+        .status(400)
+        .json({ message: 'Name, email, and password are required.' });
     }
 
-    // Check if user already exists
-    const existingUser = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+    // Make sure the email is not already taken
+    const existingUser = await pool.query(
+      'SELECT id FROM users WHERE email = $1',
+      [email]
+    );
 
     if (existingUser.rows.length > 0) {
-      return res.status(400).json({ message: 'A user with this email already exists.' });
+      return res
+        .status(400)
+        .json({ message: 'A user with this email already exists.' });
     }
 
-    // Hash password
+    // Hash the password before saving it
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    // Default role = student unless admin is explicitly set
+    // By default, every new user is a student (I only set admin manually)
     const userRole = role === 'admin' ? 'admin' : 'student';
 
-    // Insert into database
+    // Insert the user into the database
     const insertResult = await pool.query(
       `INSERT INTO users (name, email, password_hash, role)
        VALUES ($1, $2, $3, $4)
@@ -39,10 +50,10 @@ router.post('/register', async (req, res) => {
 
     const newUser = insertResult.rows[0];
 
-    // Remove password_hash before sending to frontend
+    // Remove the password hash before sending user back to the frontend
     const { password_hash, ...safeUser } = newUser;
 
-    // Create JWT
+    // Generate a JWT so the user is logged in immediately after registration
     const token = jwt.sign(
       { id: safeUser.id, role: safeUser.role },
       process.env.JWT_SECRET,
@@ -60,17 +71,22 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// LOGIN route: POST /api/auth/login
+/**
+ * POST /api/auth/login
+ * Logs a user into the system and returns a signed JWT.
+ */
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate
+    // Quick check for missing fields
     if (!email || !password) {
-      return res.status(400).json({ message: 'Email and password are required.' });
+      return res
+        .status(400)
+        .json({ message: 'Email and password are required.' });
     }
 
-    // Get user from DB
+    // Look up the user by email
     const userResult = await pool.query(
       'SELECT id, name, email, password_hash, role FROM users WHERE email = $1',
       [email]
@@ -82,16 +98,16 @@ router.post('/login', async (req, res) => {
 
     const user = userResult.rows[0];
 
-    // Compare password
+    // Compare the raw password with the stored hash
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password.' });
     }
 
-    // Remove password_hash before sending to frontend
+    // Strip out password_hash before sending the user object back
     const { password_hash, ...safeUser } = user;
 
-    // Sign token
+    // Sign a JWT with the user id and role
     const token = jwt.sign(
       { id: safeUser.id, role: safeUser.role },
       process.env.JWT_SECRET,

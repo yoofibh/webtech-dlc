@@ -1,12 +1,15 @@
 const pool = require('./db');
 const bcrypt = require('bcryptjs');
 
-// This function:
-// 1. Checks if an admin user already exists
-// 2. If not, creates a default admin: ybh@example.com / ybh123!
+/**
+ * This runs when the server starts.
+ * 1. Checks if the system already has an admin.
+ * 2. If not, it creates a default admin account so I never get locked out.
+ * I only seed an admin once — after that, the check prevents duplicates.
+ */
 const seedAdmin = async () => {
   try {
-    // 1. Check if any admin exists
+    // Check if an admin already exists
     const result = await pool.query(
       "SELECT id FROM users WHERE role = 'admin' LIMIT 1"
     );
@@ -16,10 +19,10 @@ const seedAdmin = async () => {
       return;
     }
 
-    // 2. No admin found → create one
+    // No admin found → create a default one
+    const name = 'System Admin';
     const email = 'ybh@example.com';
     const plainPassword = 'ybh123!';
-    const name = 'Adminbh User';
 
     const passwordHash = await bcrypt.hash(plainPassword, 10);
 
@@ -29,7 +32,9 @@ const seedAdmin = async () => {
       [name, email, passwordHash, 'admin']
     );
 
-    console.log(' Seed admin created: admin@example.com / Admin123!');
+    console.log('✔ Default admin account created successfully.');
+    console.log(`   Email: ${email}`);
+    console.log(`   Password: ${plainPassword}`);
   } catch (error) {
     console.error(' Error seeding admin user:', error.message);
   }
