@@ -1,5 +1,6 @@
 # Campus Digital Library Catalogue System
 
+Yoofi Egyin Brew-Hammond - 10022300180- BSC. Computer Science
 This is my web technologies exam project: a **Digital Library Catalogue System** for a university campus.
 
 The goal is to allow **students** to browse and search books online, and give **librarians/admins** a simple dashboard to manage the catalogue (add, edit, delete books, and track borrowed items).
@@ -15,6 +16,7 @@ The project is built with:
 ## 1. Core Features
 
 ### 1. User Accounts & Authentication
+
 - Users can **register** and **log in** with email + password.
 - Passwords are hashed using **bcrypt** before saving to the database.
 - After login, the server issues a **JWT token**, which the frontend stores and sends with each protected request.
@@ -23,6 +25,7 @@ The project is built with:
   - `admin` – has access to book management and admin actions.
 
 ### 2. Books Catalogue (Student View)
+
 - Public catalogue where users can:
   - View all books.
   - See title, author, category, status, and description.
@@ -32,6 +35,7 @@ The project is built with:
   - Filter by **status** (`available` or `borrowed`).
 
 ### 3. Admin Dashboard (Librarian View)
+
 Admins can:
 
 - Add new books to the system.
@@ -40,14 +44,16 @@ Admins can:
 - See an overview table of **all books** in the system.
 
 Admin pages and routes are protected by middleware that checks both:
-- **JWT validity**, and  
+
+- **JWT validity**, and
 - **User role** (`admin` only).
 
 ### 4. Borrowing & Returning Books
+
 - Logged-in students can **borrow** a book if its status is `available`.
 - When a book is borrowed:
   - A record is created in the `borrow_records` table.
-  - A default **7-day due date (week baako(1))** is set.
+  - A default **7-day due date (week 1)** is set.
   - The book status changes from `available` ➝ `borrowed`.
 - Books can be **returned** by:
   - The student who borrowed it, or
@@ -63,6 +69,7 @@ The student-facing UI also shows a **current due date** (if the book is borrowed
 ## 2. Tech Stack & Architecture
 
 ### Backend
+
 - **Node.js** with **Express.js**
 - **PostgreSQL** database (hosted on Render in my case)
 - Main files:
@@ -74,8 +81,9 @@ The student-facing UI also shows a **current due date** (if the book is borrowed
   - `middleware/auth.js` – verifies JWT tokens and enforces `admin` role where needed.
 
 ### Frontend
+
 - **Plain HTML, CSS and JS** (no frontend framework).
-- Single-page style behaviour:
+- Single-page style behavior:
   - Views:
     - Login
     - Register
@@ -83,7 +91,7 @@ The student-facing UI also shows a **current due date** (if the book is borrowed
     - Admin (manage books)
   - `app.js` switches views, calls the backend API, and manages UI state.
 
-  Database Design 
+### Database Design
 
 The main tables are:
 
@@ -114,11 +122,27 @@ The main tables are:
    - `returned_at` (nullable, set when book is returned)
 
 ---
- Setup & Running Locally
+
+## Setup & Running Locally
 
  1. Clone the Repository
 
-```bash
 git clone <https://github.com/yoofibh/webtech-dlc.git>
-cd <webtech-dlc>
-"# webtech-dlc" 
+cd webtech-dlc
+"# webtech-dlc"
+
+ 1. Install Dependencies
+
+npm install
+
+1. Set Up Environment Variables
+
+PORT=5000
+DATABASE_URL=<your_postgres_connection_string>
+JWT_SECRET=<your_secret_key>
+
+1. Start the Server
+
+npm run dev
+
+1. Open your browser and navigate to <http://localhost:5000>
