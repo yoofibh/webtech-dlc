@@ -12,7 +12,7 @@ The project is built with:
 
 ---
 
-## 🎯 Core Features
+## 1. Core Features
 
 ### 1. User Accounts & Authentication
 - Users can **register** and **log in** with email + password.
@@ -60,7 +60,7 @@ The student-facing UI also shows a **current due date** (if the book is borrowed
 
 ---
 
-## 🏗️ Tech Stack & Architecture
+## 2. Tech Stack & Architecture
 
 ### Backend
 - **Node.js** with **Express.js**
