@@ -1,4 +1,4 @@
-/*  Base Reset & Global  */
+/*  base Reset & Global  */
 *,
 *::before,
 *::after {
@@ -6,12 +6,12 @@
   margin: 0;
   padding: 0;
 }
-
+/* colour allocationzz */
 :root {
-  --bg: #0f172a;          /* dark navy */
+  --bg: #0f172a;          
   --bg-soft: #111827;
   --bg-card: #020617;
-  --accent: #3b82f6;      /* blue */
+  --accent: #3b82f6;      
   --accent-soft: rgba(59, 130, 246, 0.12);
   --accent-strong: #2563eb;
   --danger: #ef4444;
@@ -40,7 +40,7 @@ body {
   line-height: 1.6;
 }
 
-/* ========== Layout ========== */
+/*  layout */
 .app-shell {
   min-height: 100vh;
   display: flex;
@@ -55,7 +55,7 @@ body {
   padding: 0 16px;
 }
 
-/* ========== Top Navigation ========== */
+/*  top navi  */
 .app-header {
   border-bottom: 1px solid var(--border-soft);
   background: linear-gradient(to right, #020617, #020617dd, #020617);
@@ -142,7 +142,7 @@ body {
   background: var(--danger-soft);
 }
 
-/* ========== Flash Message ========== */
+/*  Flash Message  */
 #flash-message {
   margin-bottom: 18px;
   padding: 10px 14px;
@@ -167,7 +167,7 @@ body {
   border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
-/* ========== Views Wrapper ========== */
+/*  views wrapper  */
 .view {
   display: none;
 }
@@ -180,7 +180,7 @@ body {
   border: 1px solid rgba(148, 163, 184, 0.08);
 }
 
-/* Section titles */
+/* section titles */
 .section-heading {
   font-size: 1.2rem;
   font-weight: 600;
@@ -193,7 +193,7 @@ body {
   margin-bottom: 18px;
 }
 
-/* ========== Auth Forms ========== */
+/*  auth forms*/
 .form-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
@@ -226,7 +226,7 @@ body {
   margin-bottom: 14px;
 }
 
-/* Form elements */
+/* form elements */
 .form-field {
   margin-bottom: 10px;
 }
@@ -273,7 +273,7 @@ body {
   text-decoration: underline;
 }
 
-/* ========== Buttons ========== */
+/*  bbuttons  */
 .btn {
   border-radius: 999px;
   border: none;
@@ -312,7 +312,7 @@ body {
   padding: 5px 12px;
 }
 
-/* ========== Books View (Student) ========== */
+/* books view for students*/
 .books-header {
   display: flex;
   flex-direction: column;
@@ -338,7 +338,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Search + filters */
+/* search + filters */
 .books-filters {
   display: flex;
   flex-wrap: wrap;
@@ -368,7 +368,7 @@ body {
   border-color: var(--accent);
 }
 
-/* Books grid */
+/* books grid */
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -407,7 +407,7 @@ body {
   gap: 6px;
 }
 
-/* Badges */
+/* badges */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -427,7 +427,7 @@ body {
   color: var(--danger);
 }
 
-/* ========== Admin View ========== */
+/*  admin View */
 .admin-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
@@ -441,7 +441,7 @@ body {
   }
 }
 
-/* Admin table */
+/* admin table */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -475,7 +475,7 @@ body {
   gap: 4px;
 }
 
-/* ========== Footer ========== */
+/*footer */
 .app-footer {
   padding: 10px 16px 18px;
   font-size: 0.75rem;

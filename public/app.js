@@ -1,24 +1,23 @@
 // FRONTEND APP.JS
-// My single-page logic for the Digital Library Catalogue.
-// Handles: auth, books UI, filters, borrow/return, admin panel.
+//this aspect handles auth, books UI, filters, borrow/return, admin panel.
 
 
-// Base API endpoint
+// base API endpoint
 
 const API_BASE_URL = '/api';
 
-// Track logged-in user + token
+//  logged-in user + token
 let authToken = localStorage.getItem('token') || null;
 let currentUser = null;
 
-// Try loading stored user
+// try loading stored user
 try {
   currentUser = JSON.parse(localStorage.getItem('user'));
 } catch {
   currentUser = null;
 }
 
-// FLASH MESSAGES (simple feedback UI)
+// flash msgs (simple feedback UI)
 
 const flashEl = document.getElementById('flash-message');
 
@@ -35,7 +34,7 @@ function showFlash(message, type = 'success') {
   }, 3500);
 }
 
-// VIEW SWITCHING (SPA logic)
+//view switching (SPA logic)
 
 const views = {
   login: document.getElementById('view-login'),
@@ -44,7 +43,7 @@ const views = {
   admin: document.getElementById('view-admin'),
 };
 
-// Show only one view at a time
+// show only one view at a time
 function showView(name) {
   Object.keys(views).forEach((v) => {
     if (views[v]) {
@@ -53,7 +52,7 @@ function showView(name) {
   });
 }
 
-// NAVIGATION STATE (shows/hides nav buttons)
+// navi logic (shows/hides nav buttons)
 
 const navAdmin = document.getElementById('nav-admin');
 const navLogin = document.getElementById('nav-login');
@@ -62,12 +61,12 @@ const navLogout = document.getElementById('nav-logout');
 
 function updateNav() {
   if (currentUser && authToken) {
-    // Logged-in state
+    // logged-in state
     if (navLogout) navLogout.style.display = 'inline-flex';
     if (navLogin) navLogin.style.display = 'none';
     if (navRegister) navRegister.style.display = 'none';
 
-    // Admin link only for admins
+    // admin link only for admins
     if (currentUser.role === 'admin') {
       if (navAdmin) navAdmin.style.display = 'inline-flex';
     } else {
@@ -75,7 +74,7 @@ function updateNav() {
     }
 
   } else {
-    // Logged-out state
+    // logged-out state
     if (navLogin) navLogin.style.display = 'inline-flex';
     if (navRegister) navRegister.style.display = 'inline-flex';
     if (navLogout) navLogout.style.display = 'none';
@@ -83,7 +82,7 @@ function updateNav() {
   }
 }
 
-// AUTH HELPERS (store/remove user in browser)
+// auth help (store/remove user in browser)
 
 function setAuth(token, user) {
   authToken = token;
@@ -103,7 +102,7 @@ function clearAuth() {
   updateNav();
 }
 
-// API WRAPPER (handles headers + errors)
+// api wrappeR (handles headers + errors)
 
 async function apiRequest(path, options = {}) {
   const url = `${API_BASE_URL}${path}`;
@@ -142,12 +141,12 @@ async function apiRequest(path, options = {}) {
 
   return data;
 }
-// BOOK RENDERING (Student & Admin views)
+// book rendering (Student & Admin views)
 
 const booksListEl = document.getElementById('books-list');
 const adminBooksListEl = document.getElementById('admin-books-list');
 
-// Student grid
+// student grid
 function renderBooksGrid(books) {
   if (!booksListEl) return;
 
@@ -163,7 +162,7 @@ function renderBooksGrid(books) {
 
       let actionsHtml = '';
 
-      // Students can borrow
+      // students can borrow
       if (currentUser && book.status === 'available') {
         actionsHtml += `
           <button class="btn small-btn btn-borrow" data-id="${book.id}">
@@ -172,7 +171,7 @@ function renderBooksGrid(books) {
         `;
       }
 
-      // Admin can mark returned
+      // admin can mark returned
       if (currentUser && currentUser.role === 'admin' && book.status === 'borrowed') {
         actionsHtml += `
           <button class="btn small-btn btn-return" data-id="${book.id}">
@@ -181,7 +180,7 @@ function renderBooksGrid(books) {
         `;
       }
 
-      // Due date display
+      // due date display
       let dueDateHtml = '';
       const rawDue =
         book.current_due_date || book.due_date || null;
@@ -221,7 +220,7 @@ function renderBooksGrid(books) {
     .join('');
 }
 
-// Admin table
+// admin table
 function renderBooksAdminTable(books) {
   if (!adminBooksListEl) return;
 
@@ -297,7 +296,7 @@ async function fetchBooksAndRender() {
 }
 
 
-// Populate category dropdown
+// category dropdown
 function populateCategoryFilter(books) {
   const select = document.getElementById('filter-category');
   if (!select) return;
@@ -319,13 +318,13 @@ function populateCategoryFilter(books) {
   select.value = current;
 }
 
-// AUTH FORMS (login / register)
+// authentication side(login / register)
 
 function setupAuthForms() {
   const loginForm = document.getElementById('login-form');
   const registerForm = document.getElementById('register-form');
 
-  // Login
+  // login
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -350,7 +349,7 @@ function setupAuthForms() {
     });
   }
 
-  // Register
+  // register
   if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -377,7 +376,7 @@ function setupAuthForms() {
   }
 }
 
-// ADMIN BOOK FORM (Add + Edit + Delete)
+// admin aspect for the books (add + edit + delete)
 
 function setupAdminBookForm() {
   const bookForm = document.getElementById('book-form');
@@ -393,7 +392,7 @@ function setupAdminBookForm() {
 
   if (!bookForm) return;
 
-  // Add or update a book
+  // Addandupdate books
   bookForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -436,7 +435,7 @@ function setupAdminBookForm() {
     }
   });
 
-  // Reset form
+  // reset form
   function clearForm() {
     bookIdInput.value = '';
     titleInput.value = '';
@@ -449,12 +448,12 @@ function setupAdminBookForm() {
     if (cancelBtn) cancelBtn.style.display = 'none';
   }
 
-  // Cancel edit
+  // cancel edit
   if (cancelBtn) {
     cancelBtn.addEventListener('click', clearForm);
   }
 
-  // Click handling (edit/delete)
+  // click handling (edit/delete)
   if (adminBooksListEl) {
     adminBooksListEl.addEventListener('click', (e) => {
       const target = e.target;
@@ -469,7 +468,7 @@ function setupAdminBookForm() {
     });
   }
 
-  // Load data into form for editing
+  // load data into form for editing
   async function editBook(id) {
     try {
       const book = await apiRequest(`/books/${id}`);
@@ -492,7 +491,7 @@ function setupAdminBookForm() {
     }
   }
 
-  // Delete book
+  // delete book
   async function deleteBook(id) {
     if (!confirm('Are you sure you want to delete this book?')) return;
 
@@ -508,7 +507,7 @@ function setupAdminBookForm() {
   }
 }
 
-// BORROW / RETURN (student actions)
+// borrow and return for students
 
 async function borrowBook(id) {
   if (!currentUser) {
@@ -545,10 +544,10 @@ async function markBookReturned(id) {
 }
 
 
-// NAVIGATION LOGIC
+// navi logic
 
 function setupNav() {
-  // Navbar button clicks
+  // navibar button clicks
   document.querySelectorAll('.nav-link[data-view]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const view = btn.dataset.view;
@@ -566,7 +565,7 @@ function setupNav() {
     });
   });
 
-  // Logout
+  // logout
   if (navLogout) {
     navLogout.addEventListener('click', () => {
       clearAuth();
@@ -575,18 +574,18 @@ function setupNav() {
     });
   }
 
-  // "Switch view" inside login/register forms
+  // "switch view" inside login/register forms
   document.querySelectorAll('.link-like[data-view]').forEach((link) => {
     link.addEventListener('click', () => showView(link.dataset.view));
   });
 
-  // Search button
+  // search button
   const searchBtn = document.getElementById('search-btn');
   if (searchBtn) {
     searchBtn.addEventListener('click', fetchBooksAndRender);
   }
 
-  // Search on Enter
+  // search on enter key
   const searchInput = document.getElementById('search-input');
   if (searchInput) {
     searchInput.addEventListener('keydown', (e) => {
@@ -597,7 +596,7 @@ function setupNav() {
     });
   }
 
-  // Clear filters
+  // clear filters
   const resetBtn = document.getElementById('reset-filters-btn');
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
@@ -614,9 +613,9 @@ function setupNav() {
   }
 }
 
-// INITIAL BOOT
+// init on page load
 document.addEventListener('DOMContentLoaded', () => {
-  // Footer year auto-update
+  // year forfooter
   const yearEl = document.getElementById('year');
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
@@ -627,7 +626,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAuthForms();
   setupAdminBookForm();
 
-  // Borrow/return handler on student book cards
+  // borrow/return on student book cards
   if (booksListEl) {
     booksListEl.addEventListener('click', (e) => {
       const borrowBtn = e.target.closest('.btn-borrow');
@@ -644,7 +643,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Default view when page loads
+  // default view when page loads
   if (currentUser && authToken) {
     showView('books');
     fetchBooksAndRender();

@@ -47,7 +47,7 @@ Admin pages and routes are protected by middleware that checks both:
 - Logged-in students can **borrow** a book if its status is `available`.
 - When a book is borrowed:
   - A record is created in the `borrow_records` table.
-  - A default **7-day due date** is set.
+  - A default **7-day due date (week baako(1))** is set.
   - The book status changes from `available` ➝ `borrowed`.
 - Books can be **returned** by:
   - The student who borrowed it, or
@@ -82,10 +82,6 @@ The student-facing UI also shows a **current due date** (if the book is borrowed
     - Books (student view)
     - Admin (manage books)
   - `app.js` switches views, calls the backend API, and manages UI state.
-- **Styling**:
-  - `styles.css` – custom dark theme library UI with cards, tables, and responsive layout.
-
----
 
   Database Design 
 
@@ -123,6 +119,6 @@ The main tables are:
  1. Clone the Repository
 
 ```bash
-git clone <your-repo-url-here>
-cd <your-project-folder>
+git clone <https://github.com/yoofibh/webtech-dlc.git>
+cd <webtech-dlc>
 "# webtech-dlc" 

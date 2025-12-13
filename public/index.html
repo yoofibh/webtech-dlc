@@ -5,17 +5,17 @@
   <title>Campus Digital Library Catalogue</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Main stylesheet for the DLC interface -->
+  <!-- stylesheet for the DLC interface -->
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="top-bar">
     <div class="logo">
-      <span class="logo-icon">📚</span>
+      <span class="logo-icon">🏛️</span>
       <span class="logo-text">Campus Digital Library</span>
     </div>
 
-    <!-- Simple top navigation for switching SPA views -->
+    <!--  navigation for switching SPA views at the top -->
     <nav class="main-nav">
       <button class="nav-link" data-view="books">Books</button>
       <button class="nav-link" data-view="admin" id="nav-admin" style="display:none;">Admin</button>
@@ -26,10 +26,10 @@
   </header>
 
   <main class="container">
-    <!-- Flash area for quick success/error messages -->
+    <!-- clean area for quick success/error message -->
     <div id="flash-message" class="flash" style="display:none;"></div>
 
-    <!-- LOGIN VIEW  -->
+    <!-- login view  -->
     <section id="view-login" class="view">
       <h2>Login</h2>
       <form id="login-form" class="form-card">
@@ -49,7 +49,7 @@
       </p>
     </section>
 
-    <!--REGISTER VIEW -->
+    <!--register view -->
     <section id="view-register" class="view" style="display:none;">
       <h2>Register</h2>
       <form id="register-form" class="form-card">
@@ -73,7 +73,7 @@
       </p>
     </section>
 
-    <!--BOOKS VIEW (Student)-->
+    <!--books view for the student -->
     <section id="view-books" class="view" style="display:none;">
       <div class="view-header">
         <h2>Books Catalogue</h2>
@@ -96,15 +96,15 @@
         </div>
       </div>
 
-      <!--Books for students are rendered here by app.js-->
+      <!--books for students are rendered here by app.js-->
       <div id="books-list" class="cards-grid"></div>
     </section>
 
-    <!--ADMIN VIEW (Manage books)-->
+    <!--admin view to manage books-->
     <section id="view-admin" class="view" style="display:none;">
       <h2>Admin: Manage Books</h2>
 
-      <!-- Book form for adding/updating records -->
+      <!-- form for adding/updating records -->
       <form id="book-form" class="form-card">
         <input type="hidden" id="book-id" />
         <div class="form-row">
@@ -156,7 +156,7 @@
       </form>
 
       <h3>All Books</h3>
-      <!-- Admin table for all books (injected by app.js) -->
+      <!-- admin table for all books  -->
       <div id="admin-books-list" class="table-wrapper"></div>
     </section>
   </main>
@@ -168,7 +168,7 @@
     </p>
   </footer>
 
-  <!-- Main frontend logic for handling SPA + API calls -->
+  <!-- frontend logic for handling SPA + API calls -->
   <script src="app.js"></script>
 </body>
 </html>
