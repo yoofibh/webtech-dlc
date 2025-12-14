@@ -23,6 +23,8 @@ The project is built with:
 - There are two main roles:
   - `student` – default role for normal users.
   - `admin` – has access to book management and admin actions.
+  - Student Login is ggg@gmail.com with password 123456
+  - admin login is ybh@example.com with password ybh123!
 
 ### 2. Books Catalogue (Student View)
 
